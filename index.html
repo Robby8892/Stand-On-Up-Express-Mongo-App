@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Hi world</title>
+</head>
+<body>
+	<p>Hows it going?</p>
+	<form id='form'>
+		<input id='response' type="text" name="response" placeholder="enter here">
+		<button>Response</button>	
+		<p id='myResponse'></p>
+	</form>
+</body>
+<script src='/socket.io/socket.io.js'></script>
+	<script>
+
+
+
+		const responseForm = document.getElementById('form')
+		
+		const myResponse = document.getElementById('myResponse')
+		
+
+		responseForm.addEventListener('submit', (e)=> {
+			e.preventDefault()
+
+			const setupInput = document.getElementById('response')
+
+			const response = setupInput.value
+
+			myResponse.innerHTML = response 
+
+			const socket = io.connect('http://localhost')
+			socket.on('news', function(data){
+				console.log(data);
+				socket.emit('my other event', {my: response})
+			})
+			
+
+
+		})
+	</script>
+
+
+</html>
