@@ -14,7 +14,7 @@ Post - /chats/new - Create new chat
 Get - /chats - Get all chats 
 Delete - chats/id - Delete chat by id
 Put / chats/id - Edit chat by id 
-``
+
 ``
 #Video Routes
 Post - /videos/new - Create new chat
@@ -22,3 +22,4 @@ Get - /videos - Get all videos
 Get - /videos/id - Get one video by id 
 Delete - /videos/id - Delete video by id
 Put - /vidoes/id - Edit video by id 
+``
