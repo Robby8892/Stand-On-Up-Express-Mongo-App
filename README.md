@@ -1,5 +1,6 @@
 #Routes
 ``
+``
 #User Routes
 Post - /users/register - Register user info 
 Post - /users/login - Login user info 
@@ -21,4 +22,3 @@ Get - /videos - Get all videos
 Get - /videos/id - Get one video by id 
 Delete - /videos/id - Delete video by id
 Put - /vidoes/id - Edit video by id 
-``
