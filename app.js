@@ -11,7 +11,7 @@ const io = require('socket.io')(server)
 apiPort = process.env.PORT
 
 app.use(bodyParser.urlencoded({ 
-	extended: true 
+	extended: false 
 }))
 
 app.use(bodyParser.json())
@@ -49,13 +49,14 @@ const authRouter = require('./routes/auth-router.js')
 
 
 app.get('/', (req,res)=>{
+
 	res.send('Test route works')
 })
 
+console.log(authRouter);
 
 
 app.use('/api', authRouter)
-
 
 
 app.listen(apiPort, ()=>{

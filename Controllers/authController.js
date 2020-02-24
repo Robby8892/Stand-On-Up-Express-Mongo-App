@@ -5,7 +5,11 @@ const User = require('../models/user.js')
 createUser = (req, res) => {
 	const body = req.body
 
-	if(!body){
+	let test = {...body}
+	console.log({...body} === '' );
+
+
+	if(body.username.length <= 0 || body.email.length <= 0 || body.password.length <= 0){
 		return res.status(400).json({
 			success: false,
 			error: 'You must provide user information'
@@ -14,7 +18,7 @@ createUser = (req, res) => {
 
 	const user = new User(body)
 
-	if(!user){
+	if(user.username.length <= 0 || user.email.length <= 0 || user.password.length <= 0){
 		return res.status(400).json({
 			success: false,
 			error: err
@@ -29,10 +33,11 @@ createUser = (req, res) => {
 		})
 	}).catch(err => {
 		return res.status({
-			error, 
+			error: err, 
 			message: 'User not created'
 		})
 	})
+	res.send("sup!")
 }
 
 

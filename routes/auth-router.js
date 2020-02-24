@@ -11,6 +11,4 @@ router.post('/auth', authController.createUser)
 
 
 
-
-
 module.exports = router
