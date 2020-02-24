@@ -8,18 +8,20 @@ const server = require('http').Server(app)
 const io = require('socket.io')(server)
 
 
-PORT = process.env.PORT
+apiPort = process.env.PORT
 
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({ 
+	extended: true 
+}))
 
 app.use(bodyParser.json())
 
 app.use(cors())
 
+const authRouter = require('./routes/auth-router.js')
+
+
 // server.listen(80)
-
-
-
 
 // app.get('/', function(req, res) {
 // 	res.sendFile(__dirname + '/index.html')
@@ -52,8 +54,10 @@ app.get('/', (req,res)=>{
 
 
 
+app.use('/api', authRouter)
 
 
-app.listen(PORT, ()=>{
-	console.log(`Sever is running on ${PORT}`);
+
+app.listen(apiPort, ()=>{
+	console.log(`Sever is running on ${apiPort}`);
 })
