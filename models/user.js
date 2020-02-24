@@ -15,15 +15,15 @@ const userSchema = mongoose.Schema({
 	},
 	firstName: {
 		type: String,
-		required: true
+		required: false
 	},
 	lastName: {
 		type: String,
-		required: true
+		required: false
 	},
 	dob: {
 		type: Date,
-		required: true
+		required: false
 	},
 	profilePhoto: {
 		type: Buffer,

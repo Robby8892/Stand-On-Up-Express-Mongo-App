@@ -6,7 +6,7 @@ const app = express()
 const cors = require('cors')
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
-
+const bcrypt = require('bcrypt')
 
 apiPort = process.env.PORT
 
@@ -46,6 +46,7 @@ const authRouter = require('./routes/auth-router.js')
 // 	})
 // })
 
+// 
 
 
 app.get('/', (req,res)=>{
