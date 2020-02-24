@@ -96,9 +96,25 @@ loginUser = async (req,res,next) => {
 	}
 
 
+logoutUser = async (req,res,next) => {
+	try {
+
+		await req.session.destroy()
+
+		return res.status(200).json({
+			success: true,
+			message: 'You are succesfully logged out'
+		})
+
+	}catch(err){
+		next(err)
+	}
+
+	}
 
 
 module.exports = {
 	createUserRegister,
-	loginUser
+	loginUser,
+	logoutUser
 }
