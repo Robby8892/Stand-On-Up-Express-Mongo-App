@@ -4,22 +4,9 @@ const bcrypt = require('bcrypt')
 createUserRegister = async (req, res) => {
 	const body = req.body
 
-	const usernameAlreadyExists = await User.findOne({
-		username: req.body.username
-	})
+	const usernameAlreadyExists = await User.findOne({username: req.body.username})
 
-	const emailAlreadyExists = await User.findOne({
-		email: req.body.email
-
-	})
-
-	if(usernameAlreadyExists){
-		return res.status(400).json({
-			success: false,
-			error: 'That username or email is already taken'
-		})
-
-	}	
+	const emailAlreadyExists = await User.findOne({email: req.body.email})
 
 	if(body.username.length <= 0 || body.email.length <= 0 || body.password.length <= 0){
 		return res.status(400).json({
@@ -28,7 +15,13 @@ createUserRegister = async (req, res) => {
 		})
 	}
 
+	if(usernameAlreadyExists || emailAlreadyExists){
+		return res.status(400).json({
+			success: false,
+			error: 'That username or email is already taken'
+		})
 
+	}	
 
 	const desiredPassword = req.body.password 
 		
@@ -42,8 +35,8 @@ createUserRegister = async (req, res) => {
 
 
 	user.save().then(() => {
-		console.log('get here please');
-		return status(201).json({
+
+		return res.status(201).json({
 			success: true,
 			id: user._id,
 			message: 'User created!'
