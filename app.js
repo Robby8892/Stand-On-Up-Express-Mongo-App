@@ -6,7 +6,8 @@ const app = express()
 const cors = require('cors')
 const server = require('http').Server(app)
 const io = require('socket.io')(server)
-const bcrypt = require('bcrypt')
+const session = require('express-session')
+
 
 apiPort = process.env.PORT
 
@@ -18,8 +19,20 @@ app.use(bodyParser.json())
 
 app.use(cors())
 
+app.use(session ({
+	secret: process.env.SESSION_SECRET,
+	resave: false,
+	saveUninitialized: true
+}))
+
+
+
+// Routes for api's  
+//======================================================
+
 const authRouter = require('./routes/auth-router.js')
 
+//======================================================
 
 // server.listen(80)
 
@@ -57,8 +70,7 @@ app.get('/', (req,res)=>{
 console.log(authRouter);
 
 
-app.use('/api', authRouter)
-
+app.use('/api/v1', authRouter)
 
 app.listen(apiPort, ()=>{
 	console.log(`Sever is running on ${apiPort}`);

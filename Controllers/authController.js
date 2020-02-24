@@ -1,7 +1,10 @@
 const User = require('../models/user.js')
 const bcrypt = require('bcrypt')
+const session = require('express-session')
+
 
 createUserRegister = async (req, res) => {
+
 	const body = req.body
 
 	const usernameAlreadyExists = await User.findOne({username: req.body.username})
@@ -52,7 +55,50 @@ createUserRegister = async (req, res) => {
 	}
 
 
+loginUser = async (req,res,next) => {
+	try {
+
+		const findUserEmail = await User.findOne({email: req.body.email})
+		const findUserUsername = await User.findOne({username: req.body.username})
+
+		if(!findUserUsername || !findUserUsername){
+			return req.status(400).json({
+				success: false,
+				message: 'Username or email is invalid'
+			})
+
+		}
+
+		const passwordIsValid = bcrypt.compareSync(req.body.password, findUserEmail.password)	
+
+		if(passwordIsValid){
+			req.session.loginStatus = true
+			req.session.userId = findUserEmail._id
+			req.session.username = findUserEmail.username
+
+			return res.status(201).json({
+				success: true,
+				message: `Succesfully logged in as ${req.session.username}`
+			})
+		} else {
+			return res.status(400).json({
+				success: false,
+				message: 'Invalid password'
+			})
+		}
+
+
+
+	}catch(err){
+		next(err)
+	}
+
+	}
+
+
+
 
 module.exports = {
-	createUserRegister
+	createUserRegister,
+	loginUser
 }
