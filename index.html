@@ -4,7 +4,7 @@
 	<title>Hi world</title>
 </head>
 <body>
-	<p>Hows it going?</p>
+	<p id='comp'>Hows it going?</p>
 	<form id='form'>
 		<input id='response' type="text" name="response" placeholder="enter here">
 		<button>Response</button>	
@@ -13,13 +13,15 @@
 </body>
 <script src='/socket.io/socket.io.js'></script>
 	<script>
-
-
-
 		const responseForm = document.getElementById('form')
 		
 		const myResponse = document.getElementById('myResponse')
-		
+
+		const computer = document.getElementById('comp')
+
+		if(myResponse.innerHTML === 'Pretty good'){
+			computer.innerHTML = 'Good to hear!!'
+		}
 
 		responseForm.addEventListener('submit', (e)=> {
 			e.preventDefault()
