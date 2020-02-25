@@ -1,4 +1,4 @@
-Spints
+Splints
 -
 
 Sprint-One (2/21/20 - 2/24/20)
