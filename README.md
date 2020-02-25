@@ -14,7 +14,7 @@ Create model for chats and reference users as FK
 -
 Have full crud on chats api via publically or private chats by Wednesday afternoon. Have socket.io working and allowing for live chats.
 
-Sprint-Three (2/28/20 - 3/2/20)
+Sprint-Three (2/28/20 - 3/1/20)
 Work on setting up live streaming on my app through ffmepg and OBS systems
 -
 create model for videos that have a user FK and chat sub document
@@ -23,7 +23,7 @@ Full crud on videos api and being working setting up React front end. Have live 
 
 
 
-Sprint-Four (3/3/20 - 3/5/20)
+Sprint-Four (3/2/20 - 3/5/20)
 Have all api's synced up in react and working with a nice design for presentation.
 -
 Have design layout nice and presentable. Deploy app through heroku. Have seed data on the site for presentation 
