@@ -29,7 +29,8 @@ const userSchema = mongoose.Schema({
 		type: Buffer,
 		contentType: String,
 		default: ''
-	}
+	},
+	streamKey: String
 })
 
 const User = mongoose.model('User', userSchema)

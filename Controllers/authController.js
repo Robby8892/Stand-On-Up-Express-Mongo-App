@@ -1,7 +1,17 @@
 const User = require('../models/user.js')
 const bcrypt = require('bcrypt')
 const session = require('express-session')
+const passport = require('passport')
+const localStragety = require('passport-local')
+const shortid = require('shortid')
 
+passport.serializeUser((user, cb)=>{
+	cb(null, user)
+})
+
+passport.deserializeUser((obj, cb)=>{
+	cb(null, obj)
+})
 
 createUserRegister = async (req, res) => {
 
@@ -36,6 +46,7 @@ createUserRegister = async (req, res) => {
 
 	user.password = hashedPassword
 
+	user.streamKey = shortid.generate()
 
 	user.save().then(() => {
 
