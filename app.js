@@ -20,6 +20,10 @@ const node_media_server = require('./server/media_server.js')
 
 apiPort = process.env.PORT
 
+// My middleware
+//======================================================
+
+
 app.use(bodyParser.urlencoded({ 
 	extended: false 
 }))
@@ -29,8 +33,6 @@ app.use(flash())
 app.use(bodyParser.json())
 
 app.use(cors())
-
-
 
 app.use(session ({
 	secret: process.env.SESSION_SECRET,
@@ -42,6 +44,23 @@ app.use(session ({
 	maxAge: Date().now + (60 * 1000 * 30)
 }))
 
+app.use((req,res,next) =>{
+	if(req.session.loginStatus){
+		res.locals.loginStatus = req.session.loginStatus
+		req.locals.userId = req.session.userId
+		req.locals.username = req.session.username 								 
+
+	}else {
+		res.locals.loginStatus = false
+		req.locals.userId = false
+		req.locals.username = false
+	}
+	next()
+})
+
+
+//======================================================
+
 
 
 
@@ -49,37 +68,14 @@ app.use(session ({
 //======================================================
 
 const authRouter = require('./routes/auth-router.js')
+const chatRouter = require('./routes/chat-router.js')
 
 //======================================================
 
 
 
-// io.on('connection', (socket) => {
-// 	console.log('User has connected');
-// 	console.log(socket.id);
-
-// 	socket.on('disconnect', (msg)=>{
-// 		console.log('User has disconnected');
-// 	})
-
-// 	socket.on('SEND_MESSAGE', (data)=>{
-// 		io.emit('RECIEVE_MESSAGE', data)
-// 		// console.log('message is here ' + msg.message);
-// 	})
-
-// 	socket.emit('test_message', 'Did you get me?')
-
-// 	socket.on('example_message', (msg) => {
-// 		console.log('message is here ' + msg.message);
-
-// 	})
-
-// socket.on
-
-// })
-
-// io = socket(server);
-
+// Socket io connection to front end for chats 
+//======================================================
 io.on('connection', (socket) => {
     console.log(socket.id);
 
@@ -91,35 +87,9 @@ io.on('connection', (socket) => {
 
 
 io.listen(8000)
+//======================================================
 
-console.log(io);
 
-// server.listen(80)
-
-// app.get('/', function(req, res) {
-// 	res.sendFile(__dirname + '/index.html')
-// })
-
-// io.on('connection', function(socket) {
-// 	socket.emit('news', {hello: 'World'})
-// 	socket.on('my other event', function(data) {
-// 		console.log('here is my data on app.js', data);
-// 	})
-// })
-
-// io.on('connection', (socket)=>{
-// 	io.emit('this', {will: 'be received by everyone'});
-
-// 	socket.on('private message', (frm, msg) => {
-// 		console.log(`I have received a private message by, ${frm}, saying, ${msg}`);
-// 	})
-
-// 	socket.on('disconnect', ()=>{
-// 		io.emit('user disconnected')
-// 	})
-// })
-
-// 
 
 
 app.get('/', (req,res)=>{
@@ -127,10 +97,14 @@ app.get('/', (req,res)=>{
 	res.send('Test route works')
 })
 
-
+// Api routes being used
+//======================================================
 app.use('/api/v1', authRouter)
+app.use('/api/v1', chatRouter)
+//======================================================
 
 app.listen(port, ()=>{
 	console.log(`Sever is running on ${port}`);
 })
+// Used to connect to the third party app for media streaming
 node_media_server.run()
