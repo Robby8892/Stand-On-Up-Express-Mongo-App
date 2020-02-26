@@ -17,6 +17,7 @@ createChat = async (req,res,next) => {
 
 			const newChat = {
 				body: req.body.body,
+				userOwner: req.session.userId,
 				users: [],
 				public: req.body.public
 			}
@@ -75,7 +76,7 @@ getAllChats = async (req,res,next) => {
 
 
 			chat.users.forEach((user)=>{
-				user.password = ''
+				user.password = '**********************'
 				console.log(user.password);
 			})
 
