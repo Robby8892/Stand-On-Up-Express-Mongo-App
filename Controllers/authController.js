@@ -90,11 +90,18 @@ loginUser = async (req,res,next) => {
 		const passwordIsValid = bcrypt.compareSync(req.body.password, findUserEmail.password)	
 
 		if(passwordIsValid){
+
 			req.session.loginStatus = true
 			req.session.userId = findUserEmail._id
 			req.session.username = findUserEmail.username
+			req.session.email = findUserEmail.email
 
 			return res.status(201).json({
+				data: {
+					username: req.session.username,
+					userId: req.session.userId,
+					email: req.session.email
+				},
 				success: true,
 				message: `Succesfully logged in as ${req.session.username}`
 			})
@@ -120,6 +127,7 @@ logoutUser = async (req,res,next) => {
 		await req.session.destroy()
 
 		return res.status(200).json({
+			data: {},
 			success: true,
 			message: 'You are succesfully logged out'
 		})

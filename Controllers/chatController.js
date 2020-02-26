@@ -37,8 +37,9 @@ createChat = async (req,res,next) => {
 			console.log(createChat);
 
 			res.status(200).json({
-			success: true,
-			message: 'Made it here on create chat api route public'
+				data: createChat,
+				success: true,
+				message: 'Made it here on create chat api route public'
 		})
 		}else{
 			// if the user choose private I want to take 
@@ -64,8 +65,74 @@ createChat = async (req,res,next) => {
 	}
 
 
+getAllChats = async (req,res,next) => {
+	try {
+
+		const allChats = await Chat.find().populate('users')
+
+		allChats.forEach((chat)=>{
+			console.log('here is chat in getAllChats');
+
+
+			chat.users.forEach((user)=>{
+				user.password = ''
+				console.log(user.password);
+			})
+
+		})
+		
+		res.status(200).json({
+			success: true,
+			data: allChats,
+			message: 'You got all the chats!'
+		})
+
+	}catch(err){
+		next(err)
+	}
+
+	}
+
+getAllUserChats = async (req,res,next) => {
+	try {
+
+		const userChats = await Chat.find({users: req.session.userId})
+
+		res.status(200).json({
+			data: userChats,
+			success: true,
+			message: 'Here all all your chats'
+		})
+
+	}catch(err){
+		next(err)
+	}
+
+	}
+
+deleteMyChat = async (req,res,next) => {
+	try {
+
+		console.log(req.params.id);
+
+		const deleteChat = await Chat.findByIdAndRemove(req.params.id)
+		
+		res.status(200).json({
+			data:{},
+			success: true,
+			message: 'You succesfully deleted the chat!'
+		})		
+
+	}catch(err){
+		next(err)
+	}
+
+	}		
 
 
 module.exports = {
-	createChat
+	createChat,
+	getAllChats,
+	getAllUserChats,
+	deleteMyChat
 }	

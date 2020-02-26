@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 
+const User = require('./user')
+
 const chatSchema = mongoose.Schema({
+
 	body: {
 		type: String,
 		required: true
