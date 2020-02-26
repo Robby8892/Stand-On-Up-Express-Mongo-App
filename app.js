@@ -44,19 +44,7 @@ app.use(session ({
 	maxAge: Date().now + (60 * 1000 * 30)
 }))
 
-app.use((req,res,next) =>{
-	if(req.session.loginStatus){
-		res.locals.loginStatus = req.session.loginStatus
-		req.locals.userId = req.session.userId
-		req.locals.username = req.session.username 								 
 
-	}else {
-		res.locals.loginStatus = false
-		req.locals.userId = false
-		req.locals.username = false
-	}
-	next()
-})
 
 
 //======================================================
@@ -71,6 +59,26 @@ const authRouter = require('./routes/auth-router.js')
 const chatRouter = require('./routes/chat-router.js')
 
 //======================================================
+
+
+app.use((req,res,next) =>{
+	if(req.session.loginStatus){
+		res.locals.loginStatus = req.session.loginStatus
+		res.locals.userId = req.session.userId
+		res.locals.username = req.session.username 								 
+
+	}else {
+		res.locals.loginStatus = false
+		res.locals.userId = false
+		res.locals.username = false
+		console.log('here is locals status');
+		console.log(res.locals.loginStatus);
+		console.log('here is session status');
+		console.log(req.session.loginStatus);
+	}
+	next()
+})
+
 
 
 

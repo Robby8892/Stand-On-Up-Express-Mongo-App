@@ -13,6 +13,13 @@ passport.deserializeUser((obj, cb)=>{
 	cb(null, obj)
 })
 
+
+
+
+
+
+
+
 createUserRegister = async (req, res) => {
 
 	const body = req.body
@@ -75,7 +82,7 @@ loginUser = async (req,res,next) => {
 		if(!findUserUsername || !findUserUsername){
 			return req.status(400).json({
 				success: false,
-				message: 'Username or email is invalid'
+				error: 'Username or email is invalid'
 			})
 
 		}
@@ -94,7 +101,7 @@ loginUser = async (req,res,next) => {
 		} else {
 			return res.status(400).json({
 				success: false,
-				message: 'Invalid password'
+				error: 'Invalid password'
 			})
 		}
 

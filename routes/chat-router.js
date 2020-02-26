@@ -5,8 +5,10 @@ const chatController = require('../Controllers/chatController.js')
 
 router = express.Router()
 
+const verifyLoggedIn = require('../lib/verifyLoggedIn.js')
 
-router.post('/chats/new', chatController.createChat)
+
+router.post('/chats/new', verifyLoggedIn, chatController.createChat)
 
 
 
