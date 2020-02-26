@@ -110,19 +110,49 @@ getAllUserChats = async (req,res,next) => {
 
 	}
 
+findChatById = async (req,res,next) => {
+	try {
+
+		const findChatById = await Chat.findById(req.params.id).populate('users')
+
+		findChatById.users[0].password = '**********************'
+
+		res.status(200).json({
+			data: findChatById,
+			success: true,
+			message: `Here is the chat you requested chat id - ${findChatById._id}`
+		})
+
+	}catch(err){
+		next(err)
+	}
+
+	}	
+
 deleteMyChat = async (req,res,next) => {
 	try {
 
 		console.log(req.params.id);
 
 		const deleteChat = await Chat.findByIdAndRemove(req.params.id)
-		
-		res.status(200).json({
-			data:{},
-			success: true,
-			message: 'You succesfully deleted the chat!'
-		})		
 
+		if(!deleteChat){
+
+			res.status(400).json({
+				data:{},
+				success: false,
+				error: 'No id matches the one provided to delete in the database'
+			})
+
+		}else{
+
+			res.status(200).json({
+				data:{},
+				success: true,
+				message: 'You succesfully deleted the chat!'
+			})		
+
+		}
 	}catch(err){
 		next(err)
 	}
@@ -134,5 +164,6 @@ module.exports = {
 	createChat,
 	getAllChats,
 	getAllUserChats,
-	deleteMyChat
+	deleteMyChat,
+	findChatById
 }	
