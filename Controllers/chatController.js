@@ -25,7 +25,6 @@ createChat = async (req,res,next) => {
 			const allUsers = await User.find()
 
 			allUsers.forEach((user)=>{
-				console.log(user._id);
 
 				newChat.users.push(user._id)
 			})

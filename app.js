@@ -111,7 +111,7 @@ app.listen(port, ()=>{
 	console.log(`Sever is running on ${port}`);
 })
 // Used to connect to the third party app for media streaming
-console.log("node_media_server > ", node_media_server);
+
 node_media_server.run()
 
 
