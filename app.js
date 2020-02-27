@@ -71,10 +71,6 @@ app.use((req,res,next) =>{
 		res.locals.loginStatus = false
 		res.locals.userId = false
 		res.locals.username = false
-		console.log('here is locals status');
-		console.log(res.locals.loginStatus);
-		console.log('here is session status');
-		console.log(req.session.loginStatus);
 	}
 	next()
 })
@@ -115,4 +111,8 @@ app.listen(port, ()=>{
 	console.log(`Sever is running on ${port}`);
 })
 // Used to connect to the third party app for media streaming
+console.log("node_media_server > ", node_media_server);
 node_media_server.run()
+
+
+
