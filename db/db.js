@@ -6,7 +6,7 @@ const mongodbURI = process.env.MONGODB_URI
 mongoose.connect(mongodbURI, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
-	useFindAndModify: true
+	useFindAndModify: false
 })
 
 mongoose.connection.on('connected', () => {

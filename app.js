@@ -41,7 +41,10 @@ app.use(session ({
 	store: new fileStore({
 		path: '.server/sessions'
 	}),
-	maxAge: Date().now + (60 * 1000 * 30)
+	cookie: {
+		secure: true,
+		maxAge: 6 * 60 * 1000 * 30
+	}
 }))
 
 
@@ -57,6 +60,8 @@ app.use(session ({
 
 const authRouter = require('./routes/auth-router.js')
 const chatRouter = require('./routes/chat-router.js')
+const streamRouter = require('./routes/stream-router.js')
+const settingsRouter = require('./routes/settings-router.js')
 
 //======================================================
 
@@ -105,7 +110,11 @@ app.get('/', (req,res)=>{
 //======================================================
 app.use('/api/v1', authRouter)
 app.use('/api/v1', chatRouter)
+app.use('/api/v1/streams', streamRouter)
+app.use('/api/v1/settings', settingsRouter)
 //======================================================
+
+
 
 app.listen(port, ()=>{
 	console.log(`Sever is running on ${port}`);

@@ -21,29 +21,38 @@ passport.deserializeUser((obj, cb)=>{
 
 
 createUserRegister = async (req, res) => {
+	try {
 
-	const body = req.body
 
-	const usernameAlreadyExists = await User.findOne({username: req.body.username})
+	const body = req.body.data
 
-	const emailAlreadyExists = await User.findOne({email: req.body.email})
+	const usernameAlreadyExists = await User.findOne({username: body.username})
+
+	const emailAlreadyExists = await User.findOne({email: body.email})
 
 	if(body.username.length <= 0 || body.email.length <= 0 || body.password.length <= 0){
+
+
 		return res.status(400).json({
+			status: 400,
 			success: false,
 			error: 'You must provide user information'
 		})
 	}
 
+
 	if(usernameAlreadyExists || emailAlreadyExists){
-		return res.status(400).json({
+		console.log('username or email already exist');
+
+		return res.json({
+			status: 400,
 			success: false,
 			error: 'That username or email is already taken'
 		})
 
-	}	
+	} else {
 
-	const desiredPassword = req.body.password 
+	const desiredPassword = body.password
 		
 	const salt = bcrypt.genSaltSync(10)	
 
@@ -58,16 +67,17 @@ createUserRegister = async (req, res) => {
 	user.save().then(() => {
 
 		return res.status(201).json({
+			status: 201,
 			success: true,
 			id: user._id,
 			message: 'User created!'
 		})
-	}).catch(err => {
-		return res.status({
-			error: err, 
-			message: 'User not created'
-		})
 	})
+
+}	
+	}catch(err){
+		console.log(err);
+	}
 	
 
 	}
@@ -76,37 +86,46 @@ createUserRegister = async (req, res) => {
 loginUser = async (req,res,next) => {
 	try {
 
-		const findUserEmail = await User.findOne({email: req.body.email})
-		const findUserUsername = await User.findOne({username: req.body.username})
+		const body = req.body.data
+		console.log('made it to body', body);
+
+		const findUserEmail = await User.findOne({email: body.email})
+		const findUserUsername = await User.findOne({username: body.username})
 
 		if(!findUserUsername || !findUserUsername){
-			return req.status(400).json({
+			console.log('cant find user?');
+			return res.json({
+				status: 400,
 				success: false,
 				error: 'Username or email is invalid'
 			})
 
 		}
 
-		const passwordIsValid = bcrypt.compareSync(req.body.password, findUserEmail.password)	
+		const passwordIsValid = bcrypt.compareSync(body.password, findUserUsername.password)	
 
 		if(passwordIsValid){
-
+			console.log('password is valid');
 			req.session.loginStatus = true
-			req.session.userId = findUserEmail._id
-			req.session.username = findUserEmail.username
-			req.session.email = findUserEmail.email
+			req.session.userId = findUserUsername._id
+			req.session.username = findUserUsername.username
+			req.session.email = findUserUsername.email
 
-			return res.status(201).json({
-				data: {
-					username: req.session.username,
-					userId: req.session.userId,
-					email: req.session.email
-				},
+			console.log(req.session);
+
+
+			return res.status(200).json({
+				status: 200,
+				username: req.session.username,
+				userId: req.session.userId,
+				email: req.session.email,
 				success: true,
 				message: `Succesfully logged in as ${req.session.username}`
 			})
 		} else {
-			return res.status(400).json({
+			console.log('password is invalid');
+			return res.json({
+				status: 400,
 				success: false,
 				error: 'Invalid password'
 			})
