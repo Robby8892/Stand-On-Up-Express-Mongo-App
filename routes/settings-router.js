@@ -7,12 +7,9 @@ const express = require('express'),
 
 router.get('/streamKey', 
 	(req, res) => {
-		console.log(req.query, 'here is req.query');
 
 		User.findOne({email: req.query.data}, (err, user) => {
 			if(!err) {
-				// console.log(user);
-				// console.log(user.streamKey);
 				res.status(200).json({
 					success: true,
 					message: "Here is your stream key",
@@ -24,19 +21,20 @@ router.get('/streamKey',
 	})
 
 
-router.put('/streamKey', 
-	(req,res) => {
+router.put('/streamKey', async(req,res, next) => {
+	try{
 
-		User.findOneAndUpdate({email: req.session.email}, {streamKey: shortid.generate()}, 
-			(err, user) => {
-			if(!err) {
-				res.status(200).json({
-					success: true,
-					message: "Here is your new stream key",
-					streamKey: user.streamKey
-				})
-			}
+		const updatedUser = await User.findOneAndUpdate({email: req.body.data}, {streamKey: shortid.generate()})
+
+		res.status(200).json({
+			success: true,
+			message: "Here is your new stream key",
+			streamKey: updatedUser.streamKey
 		})
-	})	    
+
+	}catch(err){
+		next(err)
+	}
+	})
 
 module.exports = router
