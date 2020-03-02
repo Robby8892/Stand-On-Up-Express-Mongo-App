@@ -16,7 +16,7 @@ const flash = require('connect-flash')
 
 const port = config.server.port
 const node_media_server = require('./server/media_server.js')
-
+const thumbnail_generator = require('./cron/thumbnails')
 
 apiPort = process.env.PORT
 
@@ -122,6 +122,6 @@ app.listen(port, ()=>{
 // Used to connect to the third party app for media streaming
 
 node_media_server.run()
-
+thumbnail_generator.start()
 
 
