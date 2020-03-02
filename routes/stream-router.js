@@ -13,14 +13,10 @@ router.get('/info', (req, res) => {
             for (stream in streams) {
             	query.push({key: stream})
             }
-            // let query = {$or: []};
+
             console.log("query", query);
 
-            // for (let stream in streams) {
-            //     if (streams.hasOwnProperty(stream)) continue;
-            //     console.log(stream, '___stream___');
-            //     query.$or.push({streamKey : stream});
-            // }
+
         	query.forEach((streamKey) => {
         		User.find({streamKey: streamKey.key}, (err, users) => {
         			console.log(users);
@@ -40,23 +36,6 @@ router.get('/info', (req, res) => {
         		})
         	})
 
-
-            	// User.find({$or: query}, (err, users) => {
-
-            	// 	if(err) 
-            	// 		return res.status(400)
-            	// })
-
-            // User.find(query,(err, users) => {
-            //     if (err)
-            //         return res.status(400).json({success: false, error: 'failed to get data'});
-            //     if (users) {
-            //         return res.status(200).json({
-            //         	data: users,
-            //         	success: true,
-            //         })
-            //     }
-            // });
         }
     });
  

@@ -111,8 +111,6 @@ loginUser = async (req,res,next) => {
 			req.session.username = findUserUsername.username
 			req.session.email = findUserUsername.email
 
-			console.log(req.session);
-
 
 			return res.status(200).json({
 				status: 200,
@@ -157,11 +155,29 @@ logoutUser = async (req,res,next) => {
 
 	}
 
+getUser = async (req,res,next) => {
+	try {	
+
+		const findUser = await User.find({username: req.query.username})
+
+		findUser.password = "********************"
+		res.json({
+			data: findUser,
+			success: true,
+			message: 'here is the user info!'
+		})
+
+	}catch(err){
+		next(err)
+	}
+
+	}
 
 
 
 module.exports = {
 	createUserRegister,
 	loginUser,
-	logoutUser
+	logoutUser,
+	getUser
 }
