@@ -1,6 +1,8 @@
 const NodeMediaSever = require('node-media-server')
 const User = require('../models/user.js')
 const config = require('./config/default.js').rtmp_server
+const helpers = require('../helpers/helpers')
+
 
 nms = new NodeMediaSever(config)
 
@@ -24,9 +26,7 @@ nms.on('prePublish', async (id, StreamPath, args) => {
 				session.reject()
 
 			} else {
-
-
-
+				helpers.generateStreamThumbnail(streamKey)
 			}
 		}
 	})

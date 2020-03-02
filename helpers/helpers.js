@@ -1,11 +1,11 @@
 const spawn = require('child_process').spawn
-const config = require('./sever/config/default')
-const cmd = config.rtmp_sever.trans.ffmpeg
-
+const config = require('../server/config/default.js').rtmp_server
+const cmd = config.trans.ffmepg
+console.log(cmd);
 const generateStreamThumbnail = (streamKey) => {
 	const args = [
 		'-y',
-		'-i,' 'http://127.0.0.1:8888/live/'+ streamKey +'/index.m3u8',
+		'-i,', 'http://127.0.0.1:8888/live/'+ streamKey +'/index.m3u8',
 		'-ss', '00:00:01',
 		'-vframes', '1',
 		'-vf', 'scale=-2:300',
