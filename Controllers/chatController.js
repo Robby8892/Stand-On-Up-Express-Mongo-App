@@ -11,15 +11,16 @@ createChat = async (req,res,next) => {
 		// I want to be able to make this chat open to everyone on the site
 		// eventually when videos are made there will need to a check to see if the video is already has a
 		// public view
-		if(req.body.public == true){
+		console.log(req.body.data);
+		if(req.body.data.public == true){
 			console.log('public');
 
 
 			const newChat = {
-				body: req.body.body,
-				userOwner: req.session.userId,
+				body: req.body.data.body,
+				userOwner: req.body.data.userOwner,
 				users: [],
-				public: req.body.public
+				public: req.body.data.public
 			}
 
 			const allUsers = await User.find()
@@ -39,7 +40,8 @@ createChat = async (req,res,next) => {
 			res.status(200).json({
 				data: createChat,
 				success: true,
-				message: 'Made it here on create chat api route public'
+				message: 'You succesfully created a new chat!',
+				status: 201
 		})
 		}else{
 			// if the user choose private I want to take 
@@ -68,15 +70,13 @@ createChat = async (req,res,next) => {
 getAllChats = async (req,res,next) => {
 	try {
 
-		const allChats = await Chat.find().populate('users')
+		const allChats = await Chat.find().populate('userOwner')
 
 		allChats.forEach((chat)=>{
-			console.log('here is chat in getAllChats');
-
+			chat.userOwner.password = '*********************'
 
 			chat.users.forEach((user)=>{
 				user.password = '**********************'
-				console.log(user.password);
 			})
 
 		})
@@ -91,7 +91,7 @@ getAllChats = async (req,res,next) => {
 		next(err)
 	}
 
-	}
+}
 
 getAllUserChats = async (req,res,next) => {
 	try {
@@ -108,7 +108,7 @@ getAllUserChats = async (req,res,next) => {
 		next(err)
 	}
 
-	}
+}
 
 findChatById = async (req,res,next) => {
 	try {
@@ -127,7 +127,7 @@ findChatById = async (req,res,next) => {
 		next(err)
 	}
 
-	}	
+}	
 
 deleteMyChat = async (req,res,next) => {
 	try {

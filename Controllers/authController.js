@@ -146,6 +146,7 @@ logoutUser = async (req,res,next) => {
 		return res.status(200).json({
 			data: {},
 			success: true,
+			status: 200,
 			message: 'You are succesfully logged out'
 		})
 
@@ -164,7 +165,8 @@ getUser = async (req,res,next) => {
 		res.json({
 			data: findUser,
 			success: true,
-			message: 'here is the user info!'
+			message: 'here is the user info!',
+			status: 200
 		})
 
 	}catch(err){
@@ -173,11 +175,59 @@ getUser = async (req,res,next) => {
 
 	}
 
+getAllUsers = async (req,res,next) => {
+	try {
+
+		const findAllUsers = await User.find()
+
+		findAllUsers.forEach((user)=>{
+			user.password = '*****************'
+		})
+
+		res.json({
+			data: findAllUsers,
+			success: true,
+			message: 'here all the users',
+			status: 200
+		})
+
+	}catch(err){
+		next(err)
+	}
+
+	}
+
+// findUserBySearch = async (req,res,next) => {
+// 	try {
+
+// 		const query = {$or: []}
+
+// 		req.query.forEach((user) => {
+// 			query.$or.push(user)
+// 		})
+
+// 		console.log(query);
+
+// 		const getEachUser = await User.find(query)
+
+// 		res.json({
+// 			data: getEachUser,
+// 			success: true,
+// 			message: 'Here is each user',
+// 			status: 200
+// 		})
+
+// 	}catch(err){
+// 		next(err)
+// 	}
+
+// 	}	
 
 
 module.exports = {
 	createUserRegister,
 	loginUser,
 	logoutUser,
-	getUser
+	getUser,
+	getAllUsers
 }
