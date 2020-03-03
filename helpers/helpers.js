@@ -15,10 +15,6 @@ const generateStreamThumbnail = (streamKey) => {
         'server/thumbnails/' + streamKey + '.png',
     	];
  
-
-    	// console.log('here is spawn________________-');
-    	// console.log('cmd _____', cmd);
-    	// console.log('_______', args);
 	    spawn(cmd, args, {
 	        detached: true,
 	        stdio: 'ignore'

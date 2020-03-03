@@ -17,7 +17,11 @@ const chatSchema = mongoose.Schema({
 		ref: 'User',
 		required: true
 	}],
-	public: Boolean
+	public: Boolean,
+	createdOn: {
+		type: Date,
+		default: Date.now()
+	}
 
 })
 

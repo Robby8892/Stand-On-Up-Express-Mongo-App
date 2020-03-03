@@ -1,9 +1,9 @@
 const mongoose = require('mongoose')
 
-const mongodbURI = process.env.MONGODB_URI
 
 
-mongoose.connect(mongodbURI, {
+
+mongoose.connect(process.env.MONGODB_URI  || 'mongodb://localhost:27017/sou-app', {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 	useFindAndModify: false
