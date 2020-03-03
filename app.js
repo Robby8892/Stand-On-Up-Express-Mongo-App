@@ -115,7 +115,7 @@ app.use('/api/v1/settings', settingsRouter)
 
 
 
-app.listen(port, ()=>{
+app.listen(apiPort || port, ()=>{
 	console.log(`Sever is running on ${port}`);
 })
 // Used to connect to the third party app for media streaming
