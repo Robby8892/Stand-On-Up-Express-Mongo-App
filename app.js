@@ -120,10 +120,15 @@ app.use('/api/v1/settings', settingsRouter)
 //======================================================
 
 
-
-app.listen(port || 3333, ()=>{
+try {
+	app.listen(port || 3333, ()=>{
 	console.log(`Sever is running on ${port||3333}`);
 })
+
+}catch(error){
+	console.log(error);
+}
+
 // Used to connect to the third party app for media streaming
 
 node_media_server.run()
