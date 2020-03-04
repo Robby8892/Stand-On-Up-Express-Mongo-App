@@ -20,7 +20,7 @@ const config = {
             allow_origin: '*'
         },
         trans: {
-            ffmpeg: '/app/bin/ffmpeg',
+            ffmpeg: process.env.FFMPEG_PATH || '/usr/local/bin/ffmpeg',
             tasks: [
                 {
                     app: 'live',
