@@ -1,5 +1,6 @@
 require('dotenv').config()
 
+console.log(process.env.RTMP_PORT, '___________here is the port ');
 
 const config = {
     server: {
