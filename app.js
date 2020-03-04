@@ -31,7 +31,13 @@ app.use(flash())
 
 app.use(bodyParser.json())
 
-app.use(cors())
+const corsOptions = {
+	origin: [process.env.URL, 'http://localhost:3000'],
+	credentials: true,
+	optionSuccessStatus: 200
+}
+app.use(cors(corsOptions))
+
 
 app.use(session ({
 	secret: process.env.SESSION_SECRET,
