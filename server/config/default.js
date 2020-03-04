@@ -4,7 +4,7 @@ require('dotenv').config()
 const config = {
     server: {
         secret: process.env.CONFIG_SECRET,
-        port: process.env.STREAM_PORT || 3333
+        port: process.env.PORT || 3333
     },
     rtmp_server: {
         rtmp: {
