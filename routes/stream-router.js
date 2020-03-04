@@ -1,10 +1,9 @@
 const express = require('express'),
     router = express.Router(),
     User = require('../models/user.js')
-    cors = require('cors')
 
 
-router.get('/info', cors(), (req, res) => {
+router.get('/info', (req, res) => {
         if(req.query.streams){
             let streams = JSON.parse(req.query.streams);
             console.log("streams >>> ", streams);
