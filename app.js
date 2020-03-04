@@ -13,7 +13,7 @@ const flash = require('connect-flash')
 
 
 
-const port = config.server.port
+const port = process.env.STREAM_PORT
 const node_media_server = require('./server/media_server.js')
 const thumbnail_generator = require('./cron/thumbnails')
 
@@ -115,7 +115,7 @@ app.use('/api/v1/settings', settingsRouter)
 
 
 
-app.listen(port, ()=>{
+app.listen(port || 3333, ()=>{
 	console.log(`Sever is running on ${port}`);
 })
 // Used to connect to the third party app for media streaming
