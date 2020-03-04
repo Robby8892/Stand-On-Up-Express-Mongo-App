@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
 
 
 
-io.listen(8000)
+io.listen(process.env.SOCKET_PORT)
 //======================================================
 
 
@@ -115,7 +115,7 @@ app.use('/api/v1/settings', settingsRouter)
 
 
 
-app.listen(apiPort || port, ()=>{
+app.listen(port, ()=>{
 	console.log(`Sever is running on ${port}`);
 })
 // Used to connect to the third party app for media streaming
