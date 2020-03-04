@@ -4,18 +4,18 @@ require('dotenv').config()
 const config = {
     server: {
         secret: process.env.CONFIG_SECRET,
-        port: process.env.STREAM_PORT
+        port: process.env.STREAM_PORT || 3333
     },
     rtmp_server: {
         rtmp: {
-            port: process.env.RTMP_PORT,
+            port: process.env.RTMP_PORT || 1935,
             chunk_size: 60000,
             gop_cache: true,
             ping: 60,
             ping_timeout: 30
         },
         http: {
-            port: process.env.HTTP_PORT,
+            port: process.env.HTTP_PORT || 8888,
             mediaroot: './server/media',
             allow_origin: '*'
         },

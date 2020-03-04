@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
 
 
 
-io.listen(process.env.SOCKET_PORT)
+io.listen(process.env.SOCKET_PORT || 8000)
 //======================================================
 
 
