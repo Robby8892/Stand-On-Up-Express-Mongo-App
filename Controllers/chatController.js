@@ -71,9 +71,10 @@ getAllChats = async (req,res,next) => {
 	try {
 
 		const allChats = await Chat.find().populate('userOwner')
-
+		console.log(allChats, 'allChats');
 		allChats.forEach((chat)=>{
-			chat.userOwner.password = '*********************'
+
+
 
 			chat.users.forEach((user)=>{
 				user.password = '**********************'

@@ -87,7 +87,6 @@ loginUser = async (req,res,next) => {
 	try {
 
 		const body = req.body.data
-		console.log('made it to body', body);
 
 		const findUserEmail = await User.findOne({email: body.email})
 		const findUserUsername = await User.findOne({username: body.username})
