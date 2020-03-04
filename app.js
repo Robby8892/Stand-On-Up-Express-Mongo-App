@@ -121,7 +121,7 @@ app.use('/api/v1/settings', settingsRouter)
 
 
 try {
-	app.listen(port || 3333, ()=>{
+	app.listen(apiPort || 3333, ()=>{
 	console.log(`Sever is running on ${port||3333}`);
 })
 
