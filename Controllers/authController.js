@@ -29,7 +29,8 @@ createUserRegister = async (req, res) => {
 	const usernameAlreadyExists = await User.findOne({username: body.username})
 
 	const emailAlreadyExists = await User.findOne({email: body.email})
-
+	console.log(emailAlreadyExists);
+	console.log(usernameAlreadyExists);
 	if(body.username.length <= 0 || body.email.length <= 0 || body.password.length <= 0){
 
 

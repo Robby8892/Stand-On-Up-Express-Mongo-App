@@ -35,7 +35,7 @@ createChat = async (req,res,next) => {
 
 			const createChat = await Chat.create(newChat)
 
-			console.log(createChat);
+			createChat.createdOn = createChat.createdOn.toUTCString()
 
 			res.status(200).json({
 				data: createChat,
@@ -71,17 +71,13 @@ getAllChats = async (req,res,next) => {
 	try {
 
 		const allChats = await Chat.find().populate('userOwner')
-		console.log(allChats, 'allChats');
-		allChats.forEach((chat)=>{
+		
+		allChats.forEach(({userOwner})=>{
 
-
-
-			chat.users.forEach((user)=>{
-				user.password = '**********************'
-			})
+			userOwner.password = "******************"
 
 		})
-		
+
 		res.status(200).json({
 			success: true,
 			data: allChats,
