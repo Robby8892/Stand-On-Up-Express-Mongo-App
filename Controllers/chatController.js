@@ -70,13 +70,15 @@ createChat = async (req,res,next) => {
 getAllChats = async (req,res,next) => {
 	try {
 
-		const allChats = await Chat.find().populate('userOwner')
+		const allChats = await Chat.find().sort({createdOn: -1}).populate('userOwner')
 		
 		allChats.forEach(({userOwner})=>{
 
 			userOwner.password = "******************"
 
 		})
+
+
 
 		res.status(200).json({
 			success: true,
